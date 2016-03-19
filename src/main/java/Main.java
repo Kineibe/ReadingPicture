@@ -12,31 +12,31 @@ import java.util.function.Consumer;
 public class Main {
 
     public static void main(String[] args) {
-        byte[] bytesFromFile = null;        // Переменная для хранения массива байт
-        String filename = "Bugreport.png";  // Путь до файла из корня
 
-        try {
-            // Получение массива байт из картинки
-            bytesFromFile = Files.readAllBytes(Paths.get(filename));
+//        byte a = -127;
 
-            // Вывод в консоль массива байт, если убрать "(char)", то увидишь просто поток цифр.
-            // В консоли картинки ты никак не получишь.
+        List<Boolean> positive = new ArrayList<Boolean>();
+        // Допустим у нас есть 00111110 = 62
+        positive.add(false);
+        positive.add(true);
+        positive.add(true);
+        positive.add(true);
+        positive.add(true);
+        positive.add(true);
+        positive.add(false);
+        positive.add(false);
 
-            List <Integer> list = new ArrayList<Integer>();
-            for (int i = 0; i < bytesFromFile.length; ++i) {
-                System.out.print((char)bytesFromFile[i]);
-                list.add((int)bytesFromFile[i]);
-            }
+        perevod2v10(positive);
+    }
 
-            // Запись в НОВЫЙ файл путь до которого someFile.png
-            final FileOutputStream fos = new FileOutputStream(new File("someFile.png"));
-            for (Integer num : list) {
-                fos.write(num);
-            }
-//            fos.write(bytesFromFile);
-            fos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public static int perevod2v10(List<Boolean> list) {
+        int a = 0;
+        for (int i = 0; i < list.size() && i < 8; ++i) {
+            if (list.get(i))
+                a = a | (1 << i);
         }
+
+        System.out.println(a);
+        return a;
     }
 }
